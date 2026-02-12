@@ -17,12 +17,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS_DEBUG "-Wall -g -DDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wno-stringop-overflow -O3 -DNDEBUG")
 set(OpenGL_GL_PREFERENCE "GLVND")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Find required libraries
 find_package(OpenGL REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(OpenMP REQUIRED)
+
+
 
 # Generate C++ code from all resource files (optional)
 set(RESOURCES) # This variable stores array of generated resource files
@@ -87,6 +90,12 @@ else()
     target_link_libraries(Stonefish PUBLIC
         ${LIBRARIES}
     )
+    # target_compile_options(Stonefish PUBLIC
+    #     -fsanitize=address
+    # )
+    # target_link_options(Stonefish PUBLIC
+    #     -fsanitize=address
+    # )
     target_include_directories(Stonefish PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Library/include>"
         "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/${CMAKE_PROJECT_NAME}>"

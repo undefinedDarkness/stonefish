@@ -28,6 +28,7 @@
 #include <algorithm>
 #include "core/SimulationApp.h"
 #include "utils/SystemUtil.hpp"
+#include <filesystem>
 
 namespace sf
 {
@@ -35,6 +36,9 @@ namespace sf
 Mesh* LoadGeometryFromFile(const std::string& path, GLfloat scale)
 {
     std::string extension = path.substr(path.length()-3,3);
+    if (!std::filesystem::exists(path)) { 
+        cCritical("Geometry file does not exist: %s", path.c_str()); return nullptr; 
+}
     Mesh* mesh = nullptr;
     
     if(extension == "stl" || extension == "STL")
